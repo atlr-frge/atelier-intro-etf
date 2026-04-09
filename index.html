@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atelier Superintelligence — Bespoke Agentic Systems</title>
+<meta name="description" content="Atelier designs and operates autonomous infrastructure fitted to your organization. Bespoke agentic systems. Deep context. Real integrations. Results that compound.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ==============================================
+   DESIGN SYSTEM — AI Alpha ETF tokens
+   ============================================== */
+:root {
+  --bg:           #faf9f7;
+  --bg-warm:      #f4f1ec;
+  --bg-card:      #ffffff;
+  --navy:         #0c1f3f;
+  --navy-mid:     #1a3355;
+  --navy-light:   #2d4a6f;
+  --gold:         #b8860b;
+  --gold-light:   #d4a94c;
+  --gold-dim:     #b8860b18;
+  --coral:        #e85d4a;
+  --coral-dim:    #e85d4a15;
+  --green:        #1a7a4c;
+  --green-dim:    #1a7a4c12;
+  --text:         #1a1a1a;
+  --text-sec:     #5a5a5a;
+  --text-dim:     #999999;
+  --border:       #e2ddd5;
+  --border-light: #ece8e1;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'DM Sans', -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ==============================================
+   SLIDE LAYOUT
+   ============================================== */
+.slide {
+  width: 100vw;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 48px 64px 48px 64px;
+  overflow: hidden;
+}
+
+/* Top-left mark */
+.mark {
+  position: absolute;
+  top: 22px; left: 36px;
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+.mark span.sep { color: var(--gold); }
+
+/* Top-right section label */
+.sect {
+  position: absolute;
+  top: 22px; right: 64px;
+  font-family: var(--font-mono);
+  font-size: 0.44rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* Bottom-right page */
+.pg {
+  position: absolute;
+  bottom: 22px; right: 64px;
+  font-family: var(--font-mono);
+  font-size: 0.44rem;
+  color: var(--text-dim);
+}
+
+/* On navy backgrounds */
+.mark.on-navy { color: rgba(255,255,255,0.7); }
+.mark.on-navy span.sep { color: var(--gold-light); }
+.sect.on-navy, .pg.on-navy { color: rgba(255,255,255,0.4); }
+
+/* On gold backgrounds */
+.mark.on-gold, .sect.on-gold, .pg.on-gold { color: rgba(255,255,255,0.6); }
+
+/* ==============================================
+   TYPOGRAPHY
+   ============================================== */
+.lbl {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 5vw, 4rem);
+  font-weight: 300;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--navy);
+}
+
+h1 em { font-style: italic; color: var(--gold); }
+
+h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+}
+
+h2 em { font-style: italic; color: var(--gold); }
+
+h2.lg { font-size: clamp(2rem, 3.5vw, 3rem); }
+h2.md { font-size: clamp(1.5rem, 2.5vw, 2.2rem); }
+h2.xl { font-size: clamp(2.5rem, 4.5vw, 3.8rem); }
+
+.sub {
+  font-size: 0.88rem;
+  color: var(--text-sec);
+  line-height: 1.65;
+  max-width: 600px;
+}
+
+.body {
+  font-size: 0.78rem;
+  color: var(--text-sec);
+  line-height: 1.6;
+  max-width: 420px;
+}
+
+.body-wide {
+  font-size: 0.78rem;
+  color: var(--text-sec);
+  line-height: 1.6;
+  max-width: 550px;
+}
+
+/* ==============================================
+   COMPONENTS
+   ============================================== */
+
+/* Quote bar */
+.quote-bar {
+  display: flex;
+  gap: 14px;
+  align-items: stretch;
+  margin-top: 20px;
+}
+.quote-bar .bar {
+  width: 3px;
+  background: var(--gold);
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+.quote-bar .text {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--navy);
+  line-height: 1.45;
+  max-width: 380px;
+}
+
+/* Stat row */
+.stat-row { display: flex; gap: 20px; margin-top: 28px; }
+.stat-card {
+  padding: 20px;
+  flex: 1;
+  text-align: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+}
+.stat-card .val {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  color: var(--gold);
+  font-weight: 600;
+  line-height: 1;
+}
+.stat-card .label {
+  font-family: var(--font-mono);
+  font-size: 0.42rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+.stat-card .desc {
+  font-size: 0.68rem;
+  color: var(--text-sec);
+  line-height: 1.5;
+  margin-top: 8px;
+}
+
+/* Card list items */
+.card-list { display: flex; flex-direction: column; gap: 10px; }
+.card-item {
+  display: flex;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+  transition: transform 0.2s, box-shadow 0.25s;
+}
+.card-item:hover {
+  transform: translateX(3px);
+  box-shadow: -3px 0 0 var(--gold), 0 4px 16px rgba(0,0,0,0.04);
+}
+.card-item .accent {
+  width: 4px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+.card-item .inner {
+  padding: 14px 18px;
+  flex: 1;
+}
+.card-item .title {
+  font-size: 0.75rem;
+  color: var(--text-sec);
+  margin-bottom: 4px;
+}
+.card-item .title.bold {
+  font-size: 0.78rem;
+  color: var(--navy);
+  font-weight: 600;
+}
+.card-item .title.gold {
+  font-size: 0.78rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+.card-item .desc {
+  font-size: 0.7rem;
+  color: var(--text-sec);
+  line-height: 1.5;
+}
+
+/* Two column layout */
+.two-col {
+  display: flex;
+  gap: 48px;
+  flex: 1;
+  align-items: flex-start;
+}
+.col-left { flex: 0 0 420px; }
+.col-right { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+
+/* VS comparison table */
+.vs-table { display: flex; flex-direction: column; }
+.vs-row {
+  display: flex;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+.vs-row:last-child { border-bottom: none; }
+.vs-row .vs-label {
+  width: 120px;
+  font-size: 0.65rem;
+  color: var(--text-dim);
+}
+.vs-row .vs-them {
+  flex: 1;
+  font-size: 0.73rem;
+  color: var(--text-dim);
+}
+.vs-row .vs-us {
+  flex: 1;
+  font-size: 0.73rem;
+  color: var(--navy);
+  font-weight: 600;
+}
+
+/* 2x2 Grid */
+.grid-2x2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.case-card {
+  padding: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  transition: transform 0.2s, box-shadow 0.25s;
+}
+.case-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+}
+.case-card .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.case-card .case-title {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--navy);
+  display: inline;
+  vertical-align: middle;
+}
+.case-card .case-desc {
+  font-size: 0.68rem;
+  color: var(--text-sec);
+  line-height: 1.5;
+  margin-top: 10px;
+}
+.case-card .case-tag {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-style: italic;
+  color: var(--gold);
+  margin-top: 10px;
+  letter-spacing: 0.02em;
+}
+
+/* Bio cards */
+.bio-card {
+  display: flex;
+  overflow: hidden;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+}
+.bio-card .bio-accent {
+  width: 4px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+.bio-card .bio-inner {
+  padding: 18px 22px;
+  flex: 1;
+}
+.bio-card .bio-name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+.bio-card .bio-role {
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 4px;
+}
+.bio-card .bio-text {
+  font-size: 0.7rem;
+  color: var(--text-sec);
+  line-height: 1.55;
+  margin-top: 10px;
+}
+
+/* Milestone timeline */
+.milestone-stack { display: flex; flex-direction: column; gap: 8px; }
+.milestone {
+  padding: 14px 18px;
+  border-radius: 8px;
+  position: relative;
+}
+.milestone .era {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.milestone .shift {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.milestone .result { font-size: 0.68rem; }
+
+.milestone.past {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+}
+.milestone.past .era { color: var(--text-dim); }
+.milestone.past .shift { color: var(--navy); }
+.milestone.past .result { color: var(--text-sec); }
+
+.milestone.now {
+  background: var(--gold);
+  border: 1px solid var(--gold);
+}
+.milestone.now .era,
+.milestone.now .shift,
+.milestone.now .result { color: #ffffff; }
+
+/* Close stats */
+.close-stats { display: flex; gap: 16px; justify-content: center; margin-top: 24px; }
+.close-stat .csv {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--gold);
+  font-weight: 600;
+  text-align: center;
+  line-height: 1;
+}
+.close-stat .csl {
+  font-family: var(--font-mono);
+  font-size: 0.42rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: center;
+  margin-top: 2px;
+}
+
+.divider {
+  width: 400px;
+  height: 1px;
+  background: var(--border);
+  margin: 20px auto 0 auto;
+}
+
+.contact { text-align: center; margin-top: 16px; }
+.contact .name {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+.contact .email {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+/* Gold line separator */
+.gold-line { width: 40px; height: 1.5px; background: var(--gold); }
+
+@media print { .slide { page-break-after: always; min-height: 100vh; } }
+
+@media (max-width: 900px) {
+  .slide { padding: 36px 28px 36px 28px; }
+  .two-col { flex-direction: column; gap: 28px; }
+  .col-left { flex: none; }
+  .grid-2x2 { grid-template-columns: 1fr; }
+  .stat-row { flex-direction: column; }
+  .mark { left: 20px; }
+  .sect, .pg { right: 28px; }
+}
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: TITLE -->
+<div class="slide" style="background:var(--bg);justify-content:center;align-items:center;text-align:center">
+  <div class="mark"><span>Atelier</span> <span class="sep">/</span> <span>Superintelligence</span></div>
+  <div class="lbl">Bespoke Agentic Systems</div>
+  <h1>Your AI problem<br>isn&rsquo;t <em>AI.</em></h1>
+  <p class="sub" style="margin-top:20px;max-width:700px">It&rsquo;s infrastructure. Every organization has access to the same models.<br>The gap is between that raw capability and a system that actually runs your business.</p>
+  <div class="pg">pg 1</div>
+</div>
+
+<!-- SLIDE 2: THE PAIN -->
+<div class="slide" style="background:var(--bg-warm);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="mark"><span>Atelier</span> <span class="sep">/</span> <span>Superintelligence</span></div>
+  <div class="sect">THE PAIN</div>
+  <div class="two-col" style="margin-top:64px">
+    <div class="col-left">
+      <div class="lbl">The Real Problem</div>
+      <h2>You are building<br>a <em>Frankenstein.</em></h2>
+      <p class="body" style="margin-top:18px">One team is on ChatGPT. Another is using Claude. Sales bought Copilot. Someone in ops found a tool nobody else has heard of. Every department solving its own problem, none of it connected, none of it learning from the rest.</p>
+      <p class="body" style="margin-top:14px">This is not an AI strategy. It is a collection of disconnected experiments. Meanwhile, your competitors are building unified autonomous systems that run across the whole business.</p>
+    </div>
+    <div class="col-right">
+      <div class="card-item"><div class="accent"></div><div class="inner"><div class="title gold">Your competitors are not running pilots.</div><div class="desc">They are shipping. Every quarter you spend in test mode is ground you do not get back.</div></div></div>
+      <div class="card-item"><div class="accent"></div><div class="inner"><div class="title gold">Startups are outrunning you.</div><div class="desc">Ten people with the right infrastructure are outproducing teams of hundreds. The gap widens every month.</div></div></div>
+      <div class="card-item"><div class="accent"></div><div class="inner"><div class="title gold">The right builder matters more than the right model.</div><div class="desc">Models are converging. The difference is who can make them work together in your specific environment.</div></div></div>
+      <div class="card-item"><div class="accent"></div><div class="inner"><div class="title gold">We show. We don&rsquo;t pitch.</div><div class="desc">Working systems on your data. You watch it run before you commit to anything.</div></div></div>
+    </div>
+  </div>
+  <div class="pg">pg 2</div>
+</div>
+
+<!-- SLIDE 3: THE SHIFT -->
+<div class="slide" style="background:var(--bg)">
+  <div class="mark"><span>Atelier</span> <span class="sep">/</span> <span>Superintelligence</span></div>
+  <div class="sect">THE SHIFT</div>
+  <div class="two-col" style="margin-top:64px">
+    <div class="col-left" style="flex:0 0 500px">
+      <div class="lbl">Where This Is Headed</div>
+      <h2>The next enterprise<br>layer is <em>autonomous.</em></h2>
+      <p class="body-wide" style="margin-top:18px">Every major shift in enterprise technology follows the same pattern. First the capability exists. Then someone builds the infrastructure to make it useful at scale. Databases became ERP. Networks became cloud.</p>
+      <p class="body-wide" style="margin-top:14px">The same thing is happening now. The organizations building an intelligent operating layer today will have a structural advantage that is very hard to close. Not a chatbot. Not a copilot. A system that understands the entire business and runs operations at machine speed.</p>
+    </div>
+    <div class="col-right" style="margin-top:40px">
+      <div class="milestone-stack">
+        <div class="milestone past"><div class="era">1990s</div><div class="shift">Databases &rarr; ERP</div><div class="result">Operational backbone</div></div>
+        <div class="milestone past"><div class="era">2000s</div><div class="shift">Networks &rarr; Cloud</div><div class="result">Scalable infrastructure</div></div>
+        <div class="milestone past"><div class="era">2010s</div><div class="shift">Data &rarr; Analytics</div><div class="result">Decision support</div></div>
+        <div class="milestone now"><div class="era">NOW</div><div class="shift">Models &rarr; Autonomous OS</div><div class="result">Intelligent operations</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="pg">pg 3</div>
+</div>
+
+<!-- SLIDE 4: WHAT WE BUILD -->
+<div class="slide" style="background:var(--bg-warm);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="mark"><span>Atelier</span> <span class="sep">/</span> <span>Superintelligence</span></div>
+  <div class="sect">WHAT WE BUILD</div>
+  <div class="two-col" style="margin-top:64px">
+    <div class="col-left" style="flex:0 0 450px">
+      <div class="lbl">The Short Version</div>
+      <h2>We build <em>that layer.</em></h2>
+      <p class="body" style="margin-top:18px;max-width:450px">Atelier designs and operates autonomous infrastructure fitted to your organization. We learn your domain, engineer systems around your actual constraints, connect them to your real stack, and keep improving the whole thing.</p>
+      <p class="body" style="margin-top:14px;max-width:450px">Not a product you configure. Not a platform you rent. An embedded team that builds what your business specifically needs, then stays to make it better.</p>
+    </div>
+    <div class="col-right">
+      <div class="card-item"><div class="accent"></div><div class="inner"><div class="title bold">Context Engineering</div><div class="desc">Your regulatory docs, process maps, and institutional knowledge loaded into every operation. The system works with your actual domain, not a generic baseline.</div></div></div>
+      <div class="card-item"><div class="accent"></div><div class="inner"><div class="title bold">Production Integrations</div><div class="desc">Direct connections to your real tools. Salesforce, SAP, internal databases, legacy systems. Your actual stack, not a demo environment.</div></div></div>
+      <div class="card-item"><div class="accent"></div><div class="inner"><div class="title bold">Swarm Orchestration</div><div class="desc">Multiple agents working together. One reviews, another builds, a third validates. Coordinated teams of systems, not a single chatbot.</div></div></div>
+    </div>
+  </div>
+  <div class="pg">pg 4</div>
+</div>
+
+<!-- SLIDE 5: HOW IT THINKS -->
+<div class="slide" style="background:var(--bg)">
+  <div class="mark"><span>Atelier</span> <span class="sep">/</span> <span>Superintelligence</span></div>
+  <div class="sect">HOW IT THINKS</div>
+  <div class="two-col" style="margin-top:64px">
+    <div class="col-left">
+      <div class="lbl">Beyond Simple Prompts</div>
+      <h2>Systems that understand<br>the <em>goal,</em> not just the ask.</h2>
+      <p class="body" style="margin-top:18px">Most deployed systems follow instructions literally. That is useful but limited. Our systems understand the business outcome behind the instruction. They know what a good result looks like, catch when things drift, and adjust before anyone steps in.</p>
+      <p class="body" style="margin-top:14px">When confidence is low, they stop and ask rather than guess. That is the difference between a tool that does what you say and infrastructure that grasps what you need.</p>
+    </div>
+    <div class="col-right">
+      <div class="card-item"><div class="accent"></div><div class="inner"><div class="title bold">Intent Engineering</div><div class="desc">We encode the business goal, not just the task. The system knows what success means in your context and works toward it.</div></div></div>
+      <div class="card-item"><div class="accent"></div><div class="inner"><div class="title bold">Self-Correcting Judgment</div><div class="desc">The system knows when it doesn&rsquo;t know. It flags low confidence, asks for input, and escalates before it makes a costly mistake.</div></div></div>
+      <div class="card-item"><div class="accent"></div><div class="inner"><div class="title bold">Adaptive Execution</div><div class="desc">New data mid-run. Conditions shift. The system recalibrates in real time. Informed judgment, not rigid scripts.</div></div></div>
+    </div>
+  </div>
+  <div class="pg">pg 5</div>
+</div>
+
+<!-- SLIDE 6: FORCE MULTIPLIER -->
+<div class="slide" style="background:var(--bg-warm);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="mark"><span>Atelier</span> <span class="sep">/</span> <span>Superintelligence</span></div>
+  <div class="sect">OPERATIONAL LEVERAGE</div>
+  <div style="margin-top:64px">
+    <div class="lbl">The Math</div>
+    <h2>Five people doing<br>fifty people&rsquo;s <em>work.</em></h2>
+    <p class="body-wide" style="margin-top:18px">This is not about cutting headcount. It is about operational leverage. Your best people stop spending their time on coordination and start spending it on judgment, strategy, and the work you actually hired them for. The systems handle throughput. Your team handles the decisions that matter.</p>
+  </div>
+  <div class="stat-row">
+    <div class="stat-card"><div class="val">5 &rarr; 50</div><div class="label">EFFECTIVE HEADCOUNT</div><div class="desc">Same team. Radically different output.</div></div>
+    <div class="stat-card"><div class="val">24/7</div><div class="label">ALWAYS RUNNING</div><div class="desc">The system works nights, weekends, and holidays.</div></div>
+    <div class="stat-card"><div class="val">&uarr;</div><div class="label">COMPOUNDING</div><div class="desc">Every week it gets better at your specific problem.</div></div>
+  </div>
+  <div class="pg">pg 6</div>
+</div>
+
+<!-- SLIDE 7: POSITIONING -->
+<div class="slide" style="background:var(--bg)">
+  <div class="mark"><span>Atelier</span> <span class="sep">/</span> <span>Superintelligence</span></div>
+  <div class="sect">POSITIONING</div>
+  <div class="two-col" style="margin-top:64px">
+    <div class="col-left">
+      <div class="lbl">How We&rsquo;re Different</div>
+      <h2>Think <em>skunkworks.</em><br>Not vendor.</h2>
+      <p class="body" style="margin-top:18px">Every system we build is fitted to a specific organization with specific constraints. We embed with your team, learn the problem from the inside, and build something that operates like it was made in-house. Because it was.</p>
+      <div class="quote-bar" style="margin-top:24px">
+        <div class="bar"></div>
+        <div class="text">We don&rsquo;t sell AI. We sell working systems that happen to be autonomous.</div>
+      </div>
+    </div>
+    <div class="col-right">
+      <div class="vs-table">
+        <div class="vs-row"><div class="vs-label">vs. Consultancies</div><div class="vs-them">They advise</div><div class="vs-us">We build and operate</div></div>
+        <div class="vs-row"><div class="vs-label">vs. Platforms</div><div class="vs-them">They sell access</div><div class="vs-us">We sell outcomes</div></div>
+        <div class="vs-row"><div class="vs-label">vs. Automation</div><div class="vs-them">They replace tasks</div><div class="vs-us">We multiply people</div></div>
+        <div class="vs-row"><div class="vs-label">vs. Dev Shops</div><div class="vs-them">They hand off</div><div class="vs-us">We stay and improve</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="pg">pg 7</div>
+</div>
+
+<!-- SLIDE 8: FORGE -->
+<div class="slide" style="background:var(--gold)">
+  <div class="mark on-gold"><span>Atelier</span> <span class="sep">/</span> <span>Superintelligence</span></div>
+  <div class="sect on-gold">THE METHODOLOGY</div>
+  <div style="margin-top:64px">
+    <div style="font-family:var(--font-mono);font-size:0.5rem;font-weight:500;letter-spacing:0.22em;color:rgba(255,255,255,0.85);text-transform:uppercase">FORGE</div>
+    <h2 class="md" style="color:#ffffff;margin-top:6px">What it looks like<br>to work with us.</h2>
+  </div>
+  <div style="display:flex;gap:18px;margin-top:28px">
+    <div style="flex:1;background:rgba(0,0,0,0.12);backdrop-filter:blur(8px);border-radius:10px;padding:24px">
+      <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:600;color:#fff">01</div>
+      <div style="font-size:0.78rem;font-weight:600;color:#fff;margin-top:2px">Discovery</div>
+      <p style="font-size:0.68rem;color:rgba(255,255,255,0.85);line-height:1.5;margin-top:10px">We spend real time learning your domain. Not a one-day workshop. We talk to your team, map your systems, and find the constraints nobody else asks about.</p>
+      <div style="width:100%;height:1px;background:rgba(255,255,255,0.25);margin:14px 0"></div>
+      <p style="font-size:0.62rem;font-style:italic;color:rgba(255,255,255,0.8);line-height:1.45">Typical timeline: 2&ndash;4 weeks of embedded discovery before we scope anything.</p>
+    </div>
+    <div style="flex:1;background:rgba(0,0,0,0.12);backdrop-filter:blur(8px);border-radius:10px;padding:24px">
+      <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:600;color:#fff">02</div>
+      <div style="font-size:0.78rem;font-weight:600;color:#fff;margin-top:2px">Scoped Build</div>
+      <p style="font-size:0.68rem;color:rgba(255,255,255,0.85);line-height:1.5;margin-top:10px">Honest scope. Clear about what works and what does not yet. We build the system, connect it to your infrastructure, and put it into production.</p>
+      <div style="width:100%;height:1px;background:rgba(255,255,255,0.25);margin:14px 0"></div>
+      <p style="font-size:0.62rem;font-style:italic;color:rgba(255,255,255,0.8);line-height:1.45">You see it running on your own data before we move past this stage.</p>
+    </div>
+    <div style="flex:1;background:rgba(0,0,0,0.12);backdrop-filter:blur(8px);border-radius:10px;padding:24px">
+      <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:600;color:#fff">03</div>
+      <div style="font-size:0.78rem;font-weight:600;color:#fff;margin-top:2px">Operate &amp; Evolve</div>
+      <p style="font-size:0.68rem;color:rgba(255,255,255,0.85);line-height:1.5;margin-top:10px">We do not hand off and leave. The system improves as it accumulates context. Your team learns alongside it. What you have at month 6 is a different animal.</p>
+      <div style="width:100%;height:1px;background:rgba(255,255,255,0.25);margin:14px 0"></div>
+      <p style="font-size:0.62rem;font-style:italic;color:rgba(255,255,255,0.8);line-height:1.45">Knowledge transfers to your team. You are not dependent on us forever.</p>
+    </div>
+  </div>
+  <div class="pg on-gold">pg 8</div>
+</div>
+
+<!-- SLIDE 9: USE CASES -->
+<div class="slide" style="background:var(--bg-warm);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="mark"><span>Atelier</span> <span class="sep">/</span> <span>Superintelligence</span></div>
+  <div class="sect">WHERE IT WORKS</div>
+  <div style="margin-top:64px">
+    <div class="lbl">We Can Prove It</div>
+    <h2 class="md">Working systems.<br><em>Real industries.</em></h2>
+  </div>
+  <div class="grid-2x2" style="margin-top:24px">
+    <div class="case-card"><span class="dot"></span><span class="case-title">Financial Services</span><p class="case-desc">Compliance operations running at the pace of the business. Agents reviewing transactions, flagging anomalies, generating regulator-ready reports. We can show you this running.</p><p class="case-tag">Deep context = your regulatory landscape + risk profile</p></div>
+    <div class="case-card"><span class="dot"></span><span class="case-title">Advertising &amp; Creative Production</span><p class="case-desc">Pipeline orchestration across broadcast, VFX, and post-production tools. Agents coordinating work that used to need a full production team. We have working examples.</p><p class="case-tag">Deep context = creative intent + technical constraints</p></div>
+    <div class="case-card"><span class="dot"></span><span class="case-title">Enterprise Operations</span><p class="case-desc">Multi-system coordination in real time. Agents working across inventory, logistics, and customer databases. Real data, real throughput. Ask us for a walkthrough.</p><p class="case-tag">Production integrations = your actual systems, not a sandbox</p></div>
+    <div class="case-card"><span class="dot"></span><span class="case-title">Customer Intelligence</span><p class="case-desc">Agents with full caller history, product knowledge, and resolution authority. Not a chatbot. A system that acts. We will show you a live demo.</p><p class="case-tag">Compounding = every interaction makes the next one smarter</p></div>
+  </div>
+  <div class="pg">pg 9</div>
+</div>
+
+<!-- SLIDE 10: WHO WE ARE -->
+<div class="slide" style="background:var(--bg)">
+  <div class="mark"><span>Atelier</span> <span class="sep">/</span> <span>Superintelligence</span></div>
+  <div class="sect">WHO WE ARE</div>
+  <div class="two-col" style="margin-top:64px">
+    <div class="col-left">
+      <div class="lbl">The Team</div>
+      <h2>Polymaths who have<br>shipped this <em>before.</em></h2>
+      <p class="body" style="margin-top:18px">Not a team that read about this. Polymaths who have been building at the edge of technology and production for decades. Broadcast, banking, brokerage, insurance, advertising, immersive media, music, consulting, enterprise commerce. The common thread: building where no playbook exists.</p>
+      <div class="quote-bar" style="margin-top:24px">
+        <div class="bar"></div>
+        <div class="text">The part where you figure it out from scratch. Done that. Several times. That is the whole point.</div>
+      </div>
+    </div>
+    <div class="col-right">
+      <div class="bio-card"><div class="bio-accent"></div><div class="bio-inner"><div class="bio-name">Sean Evans</div><div class="bio-role">Co-Founder &amp; CTO</div><div class="bio-text">28 years building production systems across broadcast, animation, VR, and immersive media. Co-founded Occupied VR, 1188 Films, and Holy City VR. Executive produced No Dress Rehearsal for Amazon Prime (7 Canadian Screen Award nominations). Built generative and XR pipelines for the Design Exchange Toronto. SIGGRAPH presenter. CTO at EVOQ.</div></div></div>
+      <div class="bio-card"><div class="bio-accent"></div><div class="bio-inner"><div class="bio-name">Michael Chase</div><div class="bio-role">Co-Founder &amp; CEO</div><div class="bio-text">30 years at the edge of emerging technology. Built and exited 7 companies including TRAVAI (acquired by Kognitiv). Ran Deloitte&rsquo;s Novel &amp; Exponential Tech group, turning proofs of concept into enterprise deployments. CSO at Kognitiv, scaling AI-driven commerce across $500M in enterprise value. Google, BMW, Thomson Reuters, Nike. Forbes Top 100 CMO. MIT.</div></div></div>
+    </div>
+  </div>
+  <div class="pg">pg 10</div>
+</div>
+
+<!-- SLIDE 11: CLOSE -->
+<div class="slide" style="background:var(--bg-warm);border-top:1px solid var(--border);justify-content:center;align-items:center;text-align:center">
+  <div class="mark"><span>Atelier</span> <span class="sep">/</span> <span>Superintelligence</span></div>
+  <div class="lbl">Let&rsquo;s Build Something</div>
+  <h2 class="xl">Bespoke agentic<br><em>systems.</em></h2>
+  <p class="sub" style="margin-top:18px">Deep context. Real integrations.<br>Results that compound.</p>
+  <div class="close-stats">
+    <div class="close-stat" style="width:100px"><div class="csv">10x</div><div class="csl">OUTPUT</div></div>
+    <div class="close-stat" style="width:100px"><div class="csv">DEEP</div><div class="csl">CONTEXT</div></div>
+    <div class="close-stat" style="width:100px"><div class="csv">&infin;</div><div class="csl">COMPOUNDS</div></div>
+  </div>
+  <div class="divider"></div>
+  <div class="contact">
+    <div class="name">Michael Chase</div>
+    <div class="email">michael@ateliersuperintelligence.com</div>
+  </div>
+  <div class="pg">pg 11</div>
+</div>
+
+</body>
+</html>
