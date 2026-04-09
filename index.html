@@ -36,7 +36,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 17px; scroll-behavior: smooth; }
+html { font-size: 17px; scroll-behavior: smooth; text-rendering: optimizeLegibility; }
 
 body {
   font-family: var(--font-body);
@@ -127,6 +127,7 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.08;
   letter-spacing: -0.02em;
   color: var(--navy);
+  text-wrap: balance;
 }
 .section-title em { font-style: italic; color: var(--gold); }
 
@@ -137,6 +138,7 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.7;
   max-width: 640px;
   margin-top: 1rem;
+  text-wrap: pretty;
 }
 
 .body-text {
@@ -144,6 +146,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--text-sec);
   line-height: 1.7;
   max-width: 540px;
+  text-wrap: pretty;
 }
 
 /* ==============================================
@@ -190,6 +193,7 @@ section .inner {
   line-height: 1.0;
   letter-spacing: -0.03em;
   color: var(--navy);
+  text-wrap: balance;
 }
 .hero-title em { font-style: italic; color: var(--gold); }
 .hero-sub {
@@ -198,6 +202,7 @@ section .inner {
   line-height: 1.7;
   max-width: 680px;
   margin: 1.5rem auto 0;
+  text-wrap: pretty;
 }
 
 /* ==============================================
@@ -246,6 +251,7 @@ section .inner {
   font-size: 0.88rem;
   color: var(--text-sec);
   line-height: 1.6;
+  text-wrap: pretty;
 }
 
 /* ==============================================
@@ -466,6 +472,7 @@ section .inner {
   color: var(--text-sec);
   line-height: 1.6;
   margin-top: 0.75rem;
+  text-wrap: pretty;
 }
 .case-card .case-tag {
   font-family: var(--font-mono);
@@ -516,6 +523,7 @@ section .inner {
   color: var(--text-sec);
   line-height: 1.65;
   margin-top: 0.75rem;
+  text-wrap: pretty;
 }
 
 /* ==============================================
@@ -602,6 +610,83 @@ section .inner {
   .nav { display: none; }
   section, .hero, .forge-section, .close-section { page-break-inside: avoid; }
 }
+
+/* ==============================================
+   SCROLL ANIMATIONS — per animate skill
+   Easing: ease-out-expo for confident deceleration
+   Duration: 600ms enter, stagger 80ms per card
+   ============================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children */
+.stagger-children .card-item,
+.stagger-children .milestone,
+.stagger-children .forge-card,
+.stagger-children .case-card,
+.stagger-children .bio-card,
+.stagger-children .stat-card,
+.stagger-children .vs-row {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.stagger-children.visible .card-item,
+.stagger-children.visible .milestone,
+.stagger-children.visible .forge-card,
+.stagger-children.visible .case-card,
+.stagger-children.visible .bio-card,
+.stagger-children.visible .stat-card,
+.stagger-children.visible .vs-row {
+  opacity: 1;
+  transform: translateY(0);
+}
+.stagger-children.visible .card-item:nth-child(1),
+.stagger-children.visible .milestone:nth-child(1),
+.stagger-children.visible .forge-card:nth-child(1),
+.stagger-children.visible .case-card:nth-child(1),
+.stagger-children.visible .bio-card:nth-child(1),
+.stagger-children.visible .stat-card:nth-child(1),
+.stagger-children.visible .vs-row:nth-child(1) { transition-delay: 0ms; }
+.stagger-children.visible .card-item:nth-child(2),
+.stagger-children.visible .milestone:nth-child(2),
+.stagger-children.visible .forge-card:nth-child(2),
+.stagger-children.visible .case-card:nth-child(2),
+.stagger-children.visible .bio-card:nth-child(2),
+.stagger-children.visible .stat-card:nth-child(2),
+.stagger-children.visible .vs-row:nth-child(2) { transition-delay: 80ms; }
+.stagger-children.visible .card-item:nth-child(3),
+.stagger-children.visible .milestone:nth-child(3),
+.stagger-children.visible .forge-card:nth-child(3),
+.stagger-children.visible .case-card:nth-child(3),
+.stagger-children.visible .bio-card:nth-child(3),
+.stagger-children.visible .stat-card:nth-child(3),
+.stagger-children.visible .vs-row:nth-child(3) { transition-delay: 160ms; }
+.stagger-children.visible .card-item:nth-child(4),
+.stagger-children.visible .milestone:nth-child(4),
+.stagger-children.visible .case-card:nth-child(4),
+.stagger-children.visible .vs-row:nth-child(4) { transition-delay: 240ms; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .stagger-children .card-item, .stagger-children .milestone,
+  .stagger-children .forge-card, .stagger-children .case-card,
+  .stagger-children .bio-card, .stagger-children .stat-card,
+  .stagger-children .vs-row {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -621,10 +706,10 @@ section .inner {
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-inner">
+  <div class="hero-inner reveal">
     <span class="label">Bespoke Agentic Systems</span>
     <h1 class="hero-title">Your AI problem<br>isn&rsquo;t <em>AI.</em></h1>
-    <p class="hero-sub">It&rsquo;s infrastructure. Every organization has access to the same models. The gap is between that raw capability and a system that actually runs your business.</p>
+    <p class="hero-sub">It&rsquo;s infrastructure. Every organization has access to the same models. The gap is between raw capability and a system that actually runs&nbsp;your&nbsp;business.</p>
   </div>
 </div>
 
@@ -633,15 +718,15 @@ section .inner {
   <div class="inner two-col">
     <div>
       <span class="label">The Real Problem</span>
-      <h2 class="section-title">You are building<br>a <em>Frankenstein.</em></h2>
-      <p class="body-text" style="margin-top:1.25rem">One team is on ChatGPT. Another is using Claude. Sales bought Copilot. Someone in ops found a tool nobody else has heard of. Every department solving its own problem, none of it connected, none of it learning from the rest.</p>
-      <p class="body-text" style="margin-top:1rem">This is not an AI strategy. It is a collection of disconnected experiments. Meanwhile, your competitors are building unified autonomous systems that run across the whole business.</p>
+      <h2 class="section-title reveal">You are building<br>a <em>Frankenstein.</em></h2>
+      <p class="body-text reveal" style="margin-top:1.25rem">One team is on ChatGPT. Another uses Claude. Sales bought Copilot. Someone in ops found a tool nobody else has heard&nbsp;of. Every department solving its own problem, none of it connected, none of it learning from&nbsp;the&nbsp;rest.</p>
+      <p class="body-text reveal" style="margin-top:1rem">That&rsquo;s not a strategy. It&rsquo;s a collection of disconnected experiments. And your competitors are already building unified systems that run across the whole&nbsp;business.</p>
     </div>
-    <div class="card-stack">
-      <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title gold">Your competitors are not running pilots.</div><div class="card-desc">They are shipping. Every quarter you spend in test mode is ground you do not get back.</div></div></div>
-      <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title gold">Startups are outrunning you.</div><div class="card-desc">Ten people with the right infrastructure are outproducing teams of hundreds. The gap widens every month.</div></div></div>
-      <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title gold">The right builder matters more than the right model.</div><div class="card-desc">Models are converging. The difference is who can make them work together in your specific environment.</div></div></div>
-      <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title gold">We show. We don&rsquo;t pitch.</div><div class="card-desc">Working systems on your data. You watch it run before you commit to anything.</div></div></div>
+    <div class="card-stack stagger-children">
+      <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title gold">Your competitors aren&rsquo;t running&nbsp;pilots.</div><div class="card-desc">They&rsquo;re shipping. Every quarter in test mode is ground you don&rsquo;t&nbsp;get&nbsp;back.</div></div></div>
+      <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title gold">Startups are outrunning&nbsp;you.</div><div class="card-desc">Ten people with the right infrastructure are outproducing teams of hundreds. The gap widens every&nbsp;month.</div></div></div>
+      <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title gold">The right builder matters more than the right&nbsp;model.</div><div class="card-desc">Models are converging. The difference is who can wire them into your specific&nbsp;environment.</div></div></div>
+      <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title gold">We show. We don&rsquo;t&nbsp;pitch.</div><div class="card-desc">Working systems on your data. You watch it run before you commit to&nbsp;anything.</div></div></div>
     </div>
   </div>
 </section>
@@ -651,11 +736,11 @@ section .inner {
   <div class="inner two-col">
     <div>
       <span class="label">Where This Is Headed</span>
-      <h2 class="section-title">The next enterprise layer<br>is <em>autonomous.</em></h2>
-      <p class="body-text" style="margin-top:1.25rem">Every major shift in enterprise technology follows the same pattern. First the capability exists. Then someone builds the infrastructure to make it useful at scale. Databases became ERP. Networks became cloud.</p>
-      <p class="body-text" style="margin-top:1rem">The organizations building an intelligent operating layer today will have a structural advantage that is very hard to close. Not a chatbot. Not a copilot. A system that understands the entire business and runs operations at machine speed.</p>
+      <h2 class="section-title reveal">The next enterprise layer<br>is <em>autonomous.</em></h2>
+      <p class="body-text reveal" style="margin-top:1.25rem">Every major technology shift follows the same arc. The capability appears. Then someone builds the infrastructure to make it useful at scale. Databases became ERP. Networks became&nbsp;cloud.</p>
+      <p class="body-text reveal" style="margin-top:1rem">The organizations building an intelligent operating layer now will have a structural lead that&rsquo;s very hard to close. Not a chatbot. A system that runs the business at machine speed, around&nbsp;the&nbsp;clock.</p>
     </div>
-    <div class="milestone-stack">
+    <div class="milestone-stack stagger-children">
       <div class="milestone past"><div class="era">1990s</div><div class="shift">Databases &rarr; ERP</div><div class="result">Operational backbone</div></div>
       <div class="milestone past"><div class="era">2000s</div><div class="shift">Networks &rarr; Cloud</div><div class="result">Scalable infrastructure</div></div>
       <div class="milestone past"><div class="era">2010s</div><div class="shift">Data &rarr; Analytics</div><div class="result">Decision support</div></div>
@@ -669,11 +754,11 @@ section .inner {
   <div class="inner two-col">
     <div>
       <span class="label">The Short Version</span>
-      <h2 class="section-title">We build <em>that layer.</em></h2>
-      <p class="body-text" style="margin-top:1.25rem">Atelier designs and operates autonomous infrastructure fitted to your organization. We learn your domain, engineer systems around your actual constraints, connect them to your real stack, and keep improving the whole thing.</p>
-      <p class="body-text" style="margin-top:1rem">Not a product you configure. Not a platform you rent. An embedded team that builds what your business specifically needs, then stays to make it better.</p>
+      <h2 class="section-title reveal">We build <em>that layer.</em></h2>
+      <p class="body-text reveal" style="margin-top:1.25rem">Atelier designs and operates autonomous infrastructure fitted to your organization. We learn the domain, engineer systems around your actual constraints, connect to your real stack, and keep improving the whole&nbsp;thing.</p>
+      <p class="body-text reveal" style="margin-top:1rem">Not a product you configure. Not a platform you rent. An embedded team that builds what your business needs, then stays to make&nbsp;it&nbsp;better.</p>
     </div>
-    <div class="card-stack">
+    <div class="card-stack stagger-children">
       <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title">Context Engineering</div><div class="card-desc">Your regulatory docs, process maps, and institutional knowledge loaded into every operation. The system works with your actual domain, not a generic baseline.</div></div></div>
       <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title">Production Integrations</div><div class="card-desc">Direct connections to your real tools. Salesforce, SAP, internal databases, legacy systems. Your actual stack, not a demo environment.</div></div></div>
       <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title">Swarm Orchestration</div><div class="card-desc">Multiple agents working together. One reviews, another builds, a third validates. Coordinated teams of systems, not a single chatbot.</div></div></div>
@@ -686,14 +771,14 @@ section .inner {
   <div class="inner two-col">
     <div>
       <span class="label">Beyond Simple Prompts</span>
-      <h2 class="section-title">Systems that understand<br>the <em>goal,</em> not just the ask.</h2>
-      <p class="body-text" style="margin-top:1.25rem">Most deployed systems follow instructions literally. That is useful but limited. Our systems understand the business outcome behind the instruction. They know what a good result looks like, catch when things drift, and adjust before anyone steps in.</p>
-      <p class="body-text" style="margin-top:1rem">When confidence is low, they stop and ask rather than guess. That is the difference between a tool that does what you say and infrastructure that grasps what you need.</p>
+      <h2 class="section-title reveal">Systems that understand<br>the <em>goal,</em> not just the&nbsp;ask.</h2>
+      <p class="body-text reveal" style="margin-top:1.25rem">Most deployed systems follow instructions literally. Useful, but limited. Ours understand the business outcome behind the instruction. They know what good looks like, catch when things drift, and adjust before anyone steps&nbsp;in.</p>
+      <p class="body-text reveal" style="margin-top:1rem">When confidence is low, they stop and ask rather than guess. That&rsquo;s the difference between a tool and&nbsp;infrastructure.</p>
     </div>
-    <div class="card-stack">
-      <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title">Intent Engineering</div><div class="card-desc">We encode the business goal, not just the task. The system knows what success means in your context and works toward it.</div></div></div>
-      <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title">Self-Correcting Judgment</div><div class="card-desc">The system knows when it doesn&rsquo;t know. It flags low confidence, asks for input, and escalates before it makes a costly mistake.</div></div></div>
-      <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title">Adaptive Execution</div><div class="card-desc">New data mid-run. Conditions shift. The system recalibrates in real time. Informed judgment, not rigid scripts.</div></div></div>
+    <div class="card-stack stagger-children">
+      <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title">Intent Engineering</div><div class="card-desc">We encode the business goal, not the task. The system knows what success means in your context and works toward&nbsp;it.</div></div></div>
+      <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title">Self-Correcting Judgment</div><div class="card-desc">It knows when it doesn&rsquo;t know. Flags low confidence, asks for input, and escalates before making a costly&nbsp;mistake.</div></div></div>
+      <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title">Adaptive Execution</div><div class="card-desc">New data mid-run. Conditions shift. The system recalibrates in real time. Informed judgment, not rigid&nbsp;scripts.</div></div></div>
     </div>
   </div>
 </section>
@@ -702,9 +787,9 @@ section .inner {
 <section style="background:var(--bg-warm);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
   <div class="inner">
     <span class="label">The Math</span>
-    <h2 class="section-title">Five people doing<br>fifty people&rsquo;s <em>work.</em></h2>
-    <p class="body-text" style="margin-top:1.25rem;max-width:680px">This is not about cutting headcount. It is about operational leverage. Your best people stop spending their time on coordination and start spending it on judgment, strategy, and the work you actually hired them for. The systems handle throughput. Your team handles the decisions that matter.</p>
-    <div class="stat-row">
+    <h2 class="section-title reveal">Five people doing<br>fifty people&rsquo;s <em>work.</em></h2>
+    <p class="body-text reveal" style="margin-top:1.25rem;max-width:680px">Not about cutting headcount. Your best people stop spending time on coordination and start spending it on judgment, strategy, and the work you actually hired them&nbsp;for. Systems handle throughput. Your team handles the decisions that&nbsp;matter.</p>
+    <div class="stat-row stagger-children">
       <div class="stat-card"><div class="val">5 &rarr; 50</div><div class="stat-label">Effective Headcount</div><div class="stat-desc">Same team. Radically different output.</div></div>
       <div class="stat-card"><div class="val">24/7</div><div class="stat-label">Always Running</div><div class="stat-desc">The system works nights, weekends, and holidays.</div></div>
       <div class="stat-card"><div class="val">&uarr;</div><div class="stat-label">Compounding</div><div class="stat-desc">Every week it gets better at your specific problem.</div></div>
@@ -717,14 +802,14 @@ section .inner {
   <div class="inner two-col">
     <div>
       <span class="label">How We&rsquo;re Different</span>
-      <h2 class="section-title">Think <em>skunkworks.</em><br>Not vendor.</h2>
-      <p class="body-text" style="margin-top:1.25rem">Every system we build is fitted to a specific organization with specific constraints. We embed with your team, learn the problem from the inside, and build something that operates like it was made in-house. Because it was.</p>
-      <div class="quote-bar">
+      <h2 class="section-title reveal">Think <em>skunkworks.</em><br>Not&nbsp;vendor.</h2>
+      <p class="body-text reveal" style="margin-top:1.25rem">Every system we build is fitted to one organization with its own constraints. We embed with your team, learn the problem from the inside, and build something that operates like it was made in-house. Because it&nbsp;was.</p>
+      <div class="quote-bar reveal">
         <div class="bar"></div>
-        <div class="qtext">We don&rsquo;t sell AI. We sell working systems that happen to be autonomous.</div>
+        <div class="qtext">We don&rsquo;t sell AI. We sell working systems that happen to be&nbsp;autonomous.</div>
       </div>
     </div>
-    <div class="vs-table">
+    <div class="vs-table stagger-children">
       <div class="vs-row"><div class="vs-label">vs. Consultancies</div><div class="vs-them">They advise</div><div class="vs-us">We build and operate</div></div>
       <div class="vs-row"><div class="vs-label">vs. Platforms</div><div class="vs-them">They sell access</div><div class="vs-us">We sell outcomes</div></div>
       <div class="vs-row"><div class="vs-label">vs. Automation</div><div class="vs-them">They replace tasks</div><div class="vs-us">We multiply people</div></div>
@@ -736,9 +821,9 @@ section .inner {
 <!-- FORGE -->
 <div class="forge-section" id="method">
   <div class="forge-inner">
-    <span class="label" style="color:rgba(255,255,255,0.7)">Forge</span>
-    <h2 class="section-title" style="color:#fff">What it looks like<br>to work with us.</h2>
-    <div class="forge-grid">
+    <span class="label reveal" style="color:rgba(255,255,255,0.7)">Forge</span>
+    <h2 class="section-title reveal" style="color:#fff">What it looks like<br>to work with&nbsp;us.</h2>
+    <div class="forge-grid stagger-children">
       <div class="forge-card">
         <div class="num">01</div>
         <div class="ftitle">Discovery</div>
@@ -767,13 +852,13 @@ section .inner {
 <!-- USE CASES -->
 <section id="work" style="background:var(--bg-warm);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
   <div class="inner">
-    <span class="label">We Can Prove It</span>
-    <h2 class="section-title">Working systems. <em>Real industries.</em></h2>
-    <div class="grid-2x2">
-      <div class="case-card"><span class="dot"></span><span class="case-title">Financial Services</span><p class="case-desc">Compliance operations running at the pace of the business. Agents reviewing transactions, flagging anomalies, generating regulator-ready reports. We can show you this running.</p><p class="case-tag">Deep context = your regulatory landscape + risk profile</p></div>
-      <div class="case-card"><span class="dot"></span><span class="case-title">Advertising &amp; Creative</span><p class="case-desc">Pipeline orchestration across broadcast, VFX, and post-production tools. Agents coordinating work that used to need a full production team. We have working examples.</p><p class="case-tag">Deep context = creative intent + technical constraints</p></div>
-      <div class="case-card"><span class="dot"></span><span class="case-title">Enterprise Operations</span><p class="case-desc">Multi-system coordination in real time. Agents working across inventory, logistics, and customer databases. Real data, real throughput. Ask us for a walkthrough.</p><p class="case-tag">Production integrations = your actual systems, not a sandbox</p></div>
-      <div class="case-card"><span class="dot"></span><span class="case-title">Customer Intelligence</span><p class="case-desc">Agents with full caller history, product knowledge, and resolution authority. Not a chatbot. A system that acts. We will show you a live demo.</p><p class="case-tag">Compounding = every interaction makes the next one smarter</p></div>
+    <span class="label reveal">We Can Prove It</span>
+    <h2 class="section-title reveal">Working systems. <em>Real&nbsp;industries.</em></h2>
+    <div class="grid-2x2 stagger-children">
+      <div class="case-card"><span class="dot"></span><span class="case-title">Financial Services</span><p class="case-desc">Compliance operations running at the pace of the business. Agents review transactions, flag anomalies, and generate regulator-ready reports. We can show you this&nbsp;running.</p><p class="case-tag">Your regulatory landscape +&nbsp;risk&nbsp;profile</p></div>
+      <div class="case-card"><span class="dot"></span><span class="case-title">Advertising &amp;&nbsp;Creative</span><p class="case-desc">Pipeline orchestration across broadcast, VFX, and post-production. Agents coordinating work that used to need a full production team. We have working&nbsp;examples.</p><p class="case-tag">Creative intent + technical&nbsp;constraints</p></div>
+      <div class="case-card"><span class="dot"></span><span class="case-title">Enterprise Operations</span><p class="case-desc">Multi-system coordination in real time. Agents working across inventory, logistics, and customer databases. Real data, real&nbsp;throughput.</p><p class="case-tag">Your actual systems, not a&nbsp;sandbox</p></div>
+      <div class="case-card"><span class="dot"></span><span class="case-title">Customer Intelligence</span><p class="case-desc">Agents with full caller history, product knowledge, and resolution authority. Not a chatbot. A system that&nbsp;acts.</p><p class="case-tag">Every interaction makes the next one&nbsp;smarter</p></div>
     </div>
   </div>
 </section>
@@ -783,14 +868,14 @@ section .inner {
   <div class="inner two-col">
     <div>
       <span class="label">The Team</span>
-      <h2 class="section-title">Polymaths who have<br>shipped this <em>before.</em></h2>
-      <p class="body-text" style="margin-top:1.25rem">Not a team that read about this. Polymaths who have been building at the edge of technology and production for decades. Broadcast, banking, brokerage, insurance, advertising, immersive media, music, consulting, enterprise commerce. The common thread: building where no playbook exists.</p>
-      <div class="quote-bar">
+      <h2 class="section-title reveal">Polymaths who have<br>shipped this <em>before.</em></h2>
+      <p class="body-text reveal" style="margin-top:1.25rem">Not a team that read about this. Decades building at the edge of technology and production. Broadcast, banking, brokerage, insurance, advertising, immersive media, consulting, enterprise commerce. The common thread: building where no playbook&nbsp;exists.</p>
+      <div class="quote-bar reveal">
         <div class="bar"></div>
-        <div class="qtext">The part where you figure it out from scratch. Done that. Several times. That is the whole point.</div>
+        <div class="qtext">The part where you figure it out from scratch. Done that. Several times. That&rsquo;s the whole&nbsp;point.</div>
       </div>
     </div>
-    <div class="bio-stack">
+    <div class="bio-stack stagger-children">
       <div class="bio-card"><div class="bio-accent"></div><div class="bio-inner"><div class="bio-name">Sean Evans</div><div class="bio-role">Co-Founder &amp; CTO</div><div class="bio-text">28 years building production systems across broadcast, animation, VR, and immersive media. Co-founded Occupied VR, 1188 Films, and Holy City VR. Executive produced No Dress Rehearsal for Amazon Prime (7 Canadian Screen Award nominations). Built generative and XR pipelines for the Design Exchange Toronto. SIGGRAPH presenter. CTO at EVOQ.</div></div></div>
       <div class="bio-card"><div class="bio-accent"></div><div class="bio-inner"><div class="bio-name">Michael Chase</div><div class="bio-role">Co-Founder &amp; CEO</div><div class="bio-text">30 years at the edge of emerging technology. Built and exited 7 companies including TRAVAI (acquired by Kognitiv). Ran Deloitte&rsquo;s Novel &amp; Exponential Tech group, turning proofs of concept into enterprise deployments. CSO at Kognitiv, scaling AI-driven commerce across $500M in enterprise value. Google, BMW, Thomson Reuters, Nike. Forbes Top 100 CMO. MIT.</div></div></div>
     </div>
@@ -799,9 +884,9 @@ section .inner {
 
 <!-- CLOSE -->
 <div class="close-section" id="contact">
-  <span class="label">Let&rsquo;s Build Something</span>
-  <h2 class="section-title" style="display:inline-block">Bespoke agentic <em>systems.</em></h2>
-  <p class="section-sub" style="margin:1rem auto 0;text-align:center;max-width:480px">Deep context. Real integrations. Results that compound.</p>
+  <span class="label reveal">Let&rsquo;s Build Something</span>
+  <h2 class="section-title reveal" style="display:inline-block">Bespoke agentic <em>systems.</em></h2>
+  <p class="section-sub reveal" style="margin:1rem auto 0;text-align:center;max-width:480px">Deep context. Real integrations. Results that&nbsp;compound.</p>
   <div class="close-stats">
     <div class="close-stat"><div class="csv">10x</div><div class="csl">Output</div></div>
     <div class="close-stat"><div class="csv">Deep</div><div class="csl">Context</div></div>
@@ -825,6 +910,18 @@ const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 40);
 }, { passive: true });
+
+// Scroll-triggered reveals (IntersectionObserver)
+const revealEls = document.querySelectorAll('.reveal, .stagger-children');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => revealObs.observe(el));
 </script>
 
 </body>
